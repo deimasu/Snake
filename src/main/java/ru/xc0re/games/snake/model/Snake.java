@@ -1,4 +1,7 @@
-package ru.xc0re.games.snake;
+package ru.xc0re.games.snake.model;
+
+import ru.xc0re.games.snake.enums.Direction;
+import ru.xc0re.games.snake.enums.GameUnit;
 
 import java.util.ArrayList;
 
@@ -6,14 +9,7 @@ public class Snake {
 
     private ArrayList<SnakePart> snakeBody = new ArrayList<SnakePart>();
 
-    /*
-    * 0 - up
-    * 1 - right
-    * 2 - down
-    * 3 - left
-     */
-
-    private int direction;
+    private Direction direction;
 
     // a snake part that reserves place to added part when food eaten
 
@@ -30,7 +26,7 @@ public class Snake {
         snakeBody.add(new SnakePart(snakeBody.get(0).getX(), snakeBody.get(3).getY() + 1));
         lastPartLastSeen = new SnakePart(snakeBody.get(0).getX(), snakeBody.get(4).getX() + 1);
 
-        this.direction = 0;
+        this.direction = Direction.UP;
 
     }
 
@@ -42,7 +38,7 @@ public class Snake {
         return snakeBody.size();
     }
 
-    public void setDirection(int direction) {
+    public void setDirection(Direction direction) {
         this.direction = direction;
     }
 
@@ -56,25 +52,25 @@ public class Snake {
             snakeBody.get(i).setY(snakeBody.get(i - 1).getY());
         }
 
-        if (direction == 0) {
+        if (direction == Direction.UP) {
             if (snakeBody.get(0).getY() != 0)
                 snakeBody.get(0).setY(snakeBody.get(0).getY() - 1);
             else
                 snakeBody.get(0).setY(Board.HEIGHT - 1);
         }
-        else if (direction == 1) {
+        else if (direction == Direction.RIGHT) {
             if (snakeBody.get(0).getX() != Board.WIDTH - 1)
                 snakeBody.get(0).setX(snakeBody.get(0).getX() + 1);
             else
                 snakeBody.get(0).setX(0);
         }
-        else if (direction == 2) {
+        else if (direction == Direction.DOWN) {
             if (snakeBody.get(0).getY() != Board.HEIGHT - 1)
                 snakeBody.get(0).setY(snakeBody.get(0).getY() + 1);
             else
                 snakeBody.get(0).setY(0);
         }
-        else if (direction == 3) {
+        else if (direction == Direction.LEFT) {
             if (snakeBody.get(0).getX() != 0)
                 snakeBody.get(0).setX(snakeBody.get(0).getX() - 1);
             else
@@ -86,7 +82,7 @@ public class Snake {
             Board.getInstance().set(snakeBody.get(0).getX(), snakeBody.get(0).getY(), snakeBody.get(0));
             return true;
         }
-        if (Board.get(snakeBody.get(0).getX(), snakeBody.get(0).getY()) == 3) {
+        if (Board.get(snakeBody.get(0).getX(), snakeBody.get(0).getY()) == GameUnit.FOOD) {
             grow();
             Board.foodExists = false;
             return true;
@@ -104,7 +100,7 @@ public class Snake {
         return snakeBody.get(index);
     }
 
-    public int getDirection() {
+    public Direction getDirection() {
         return direction;
     }
 }

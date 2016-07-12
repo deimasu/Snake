@@ -1,7 +1,7 @@
-package ru.xc0re.games.snake;
+package ru.xc0re.games.snake.model;
 
-import java.io.File;
-import java.io.FileInputStream;
+import ru.xc0re.games.snake.enums.GameUnit;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -17,7 +17,7 @@ public class Board {
     public static final int WIDTH = 25;
     public static final int HEIGHT = 25;
 
-    private static int[][] boardBody;
+    private static GameUnit[][] boardBody;
 
     private static Board instance;
     public static boolean foodExists;
@@ -25,7 +25,7 @@ public class Board {
     private Board()  {
 
         try {
-            boardBody = new int[HEIGHT][WIDTH];
+            boardBody = new GameUnit[HEIGHT][WIDTH];
 
             InputStream fin = Board.class.getClassLoader().getResourceAsStream("level3.map");
 
@@ -39,8 +39,8 @@ public class Board {
             for (int i = 0; i < HEIGHT; i++) {
                 for (int j = 0; j < WIDTH; j++) {
                     if (code[counter] == 49)
-                        boardBody[i][j] = 1;
-                    else boardBody[i][j] = 0;
+                        boardBody[i][j] = GameUnit.WALL;
+                    else boardBody[i][j] = GameUnit.EMPTY_SPACE;
                     counter++;
                 }
             }
@@ -59,17 +59,17 @@ public class Board {
     }
 
     public boolean isFieldEmpty(int x, int y) {
-        return boardBody[y][x] == 0;
+        return boardBody[y][x] == GameUnit.EMPTY_SPACE;
     }
 
     public void set(int x, int y, Object o) {
 
         if (o instanceof Snake) {
-            boardBody[y][x] = 0;
+            boardBody[y][x] = GameUnit.EMPTY_SPACE;
         } else if (o instanceof Food) {
-            boardBody[y][x] = 3;
+            boardBody[y][x] = GameUnit.FOOD;
         } else if (o instanceof SnakePart) {
-            boardBody[y][x] = 2;
+            boardBody[y][x] = GameUnit.SNAKE;
         }
 
     }
@@ -83,7 +83,7 @@ public class Board {
         }
     }
 
-    public static int get(int x, int y) {
+    public static GameUnit get(int x, int y) {
         return boardBody[y][x];
     }
 

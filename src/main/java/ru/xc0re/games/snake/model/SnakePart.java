@@ -1,4 +1,4 @@
-package ru.xc0re.games.snake;
+package ru.xc0re.games.snake.model;
 
 public class SnakePart {
 

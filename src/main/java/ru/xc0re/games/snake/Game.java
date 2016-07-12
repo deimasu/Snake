@@ -1,12 +1,15 @@
 package ru.xc0re.games.snake;
 
-import javax.imageio.ImageIO;
+import ru.xc0re.games.snake.enums.Direction;
+import ru.xc0re.games.snake.enums.GameUnit;
+import ru.xc0re.games.snake.model.Board;
+import ru.xc0re.games.snake.model.Food;
+import ru.xc0re.games.snake.model.Snake;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.File;
-import java.io.IOException;
 
 public class Game extends JFrame implements Runnable {
 
@@ -61,22 +64,22 @@ public class Game extends JFrame implements Runnable {
                 if (key == KeyEvent.VK_KP_LEFT || key == KeyEvent.VK_LEFT)
                 {
                     if (snake.get(1).getX() != snake.get(0).getX() - 1)
-                        snake.setDirection(3);
+                        snake.setDirection(Direction.LEFT);
                 }
                 else if (key == KeyEvent.VK_KP_RIGHT || key == KeyEvent.VK_RIGHT)
                 {
                     if (snake.get(1).getX() != snake.get(0).getX() + 1)
-                        snake.setDirection(1);
+                        snake.setDirection(Direction.RIGHT);
                 }
                 else if (key == KeyEvent.VK_KP_UP || key == KeyEvent.VK_UP)
                 {
                     if (snake.get(1).getY() != snake.get(0).getY() - 1)
-                        snake.setDirection(0);
+                        snake.setDirection(Direction.UP);
                 }
                 else if (key == KeyEvent.VK_KP_DOWN || key == KeyEvent.VK_DOWN)
                 {
                     if (snake.get(1).getY() != snake.get(0).getY() + 1)
-                        snake.setDirection(2);
+                        snake.setDirection(Direction.DOWN);
                 }
             }
         });
@@ -112,17 +115,17 @@ public class Game extends JFrame implements Runnable {
         if (!initialised) {
             for (int i = 0; i < Board.WIDTH; i++) {
                 for (int j = 0; j < Board.HEIGHT; j++) {
-                    if (Board.get(j, i) == 1) {
+                    if (Board.get(j, i) == GameUnit.WALL) {
                         g.setColor(Color.gray);
                         g.fillRect(8 + j * Game.ONE_UNIT_SIZE, 30 + i * Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE);
                         g.setColor(Color.black);
                         g.drawRect(8 + j * Game.ONE_UNIT_SIZE, 30 + i * Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE);
                     }
-                    else if (Board.get(j, i) == 2) {
+                    else if (Board.get(j, i) == GameUnit.SNAKE) {
                         g.setColor(Color.green);
                         g.fillRect(8 + j * Game.ONE_UNIT_SIZE, 30 + i * Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE);
                     }
-                    else if (Board.get(j, i) == 0) {
+                    else if (Board.get(j, i) == GameUnit.EMPTY_SPACE) {
                         g.setColor(new Color(150, 75, 0));
                         g.fillRect(8 + j * Game.ONE_UNIT_SIZE, 30 + i * Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE);
                     }
@@ -156,25 +159,25 @@ public class Game extends JFrame implements Runnable {
                     Game.ONE_UNIT_SIZE);
 
             g.setColor(Color.black);
-            if (snake.getDirection() == 0) {
+            if (snake.getDirection() == Direction.UP) {
                 g.drawRect(8 + snake.get(0).getX() * Game.ONE_UNIT_SIZE + 2,
                         30 + snake.get(0).getY() * Game.ONE_UNIT_SIZE + 3, 2, 2);
                 g.drawRect(8 + snake.get(0).getX() * Game.ONE_UNIT_SIZE + 10,
                         30 + snake.get(0).getY() * Game.ONE_UNIT_SIZE + 3, 2, 2);
             }
-            else if (snake.getDirection() == 1) {
+            else if (snake.getDirection() == Direction.RIGHT) {
                 g.drawRect(8 + snake.get(0).getX() * Game.ONE_UNIT_SIZE + 10,
                         30 + snake.get(0).getY() * Game.ONE_UNIT_SIZE + 2, 2, 2);
                 g.drawRect(8 + snake.get(0).getX() * Game.ONE_UNIT_SIZE + 10,
                         30 + snake.get(0).getY() * Game.ONE_UNIT_SIZE + 10, 2, 2);
             }
-            else if (snake.getDirection() == 2) {
+            else if (snake.getDirection() == Direction.DOWN) {
                 g.drawRect(8 + snake.get(0).getX() * Game.ONE_UNIT_SIZE + 2,
                         30 + snake.get(0).getY() * Game.ONE_UNIT_SIZE + 10, 2, 2);
                 g.drawRect(8 + snake.get(0).getX() * Game.ONE_UNIT_SIZE + 10,
                         30 + snake.get(0).getY() * Game.ONE_UNIT_SIZE + 10, 2, 2);
             }
-            else if (snake.getDirection() == 3) {
+            else if (snake.getDirection() == Direction.LEFT) {
                 g.drawRect(8 + snake.get(0).getX() * Game.ONE_UNIT_SIZE + 2,
                         30 + snake.get(0).getY() * Game.ONE_UNIT_SIZE + 10, 2, 2);
                 g.drawRect(8 + snake.get(0).getX() * Game.ONE_UNIT_SIZE + 2,
