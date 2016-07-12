@@ -20,6 +20,9 @@ public class Food {
         }
         while (!Board.getInstance().isFieldEmpty(x, y));
 
+        this.x = x;
+        this.y = y;
+
         Board.getInstance().set(x, y, this);
 
     }

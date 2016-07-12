@@ -34,6 +34,10 @@ public class Snake {
 
     }
 
+    public SnakePart getLastPartLastSeen() {
+        return lastPartLastSeen;
+    }
+
     public int getLength() {
         return snakeBody.size();
     }

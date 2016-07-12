@@ -14,8 +14,9 @@ public class Game extends JFrame implements Runnable {
     private Food food;
 
     private boolean gameEnded;
+    private boolean initialised;
 
-    public static final int ONE_UNIT_SIZE = 19;
+    public static final int ONE_UNIT_SIZE = 10;
     public static final int HEIGHT = Board.HEIGHT * ONE_UNIT_SIZE + 39;
     public static final int WIDTH = Board.WIDTH * ONE_UNIT_SIZE + 16;
 
@@ -42,20 +43,20 @@ public class Game extends JFrame implements Runnable {
         addKeyListener(new KeyListener() {
 
             public void keyTyped(KeyEvent e) {
-                myKeyEvt(e, "keyTyped");
+//                myKeyEvt(e);
             }
 
 
             public void keyReleased(KeyEvent e) {
-                myKeyEvt(e, "keyReleased");
+                myKeyEvt(e);
             }
 
 
             public void keyPressed(KeyEvent e) {
-                myKeyEvt(e, "keyPressed");
+                myKeyEvt(e);
             }
 
-            private void myKeyEvt(KeyEvent e, String text) {
+            private void myKeyEvt(KeyEvent e) {
                 int key = e.getKeyCode();
 
                 if (key == KeyEvent.VK_KP_LEFT || key == KeyEvent.VK_LEFT)
@@ -93,8 +94,11 @@ public class Game extends JFrame implements Runnable {
 
             update(getGraphics());
 
+            setTitle("Snake. Length: " + snake.getLength());
+
             try {
-                Thread.sleep(200);
+                repaint();
+                Thread.sleep(300);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -105,29 +109,54 @@ public class Game extends JFrame implements Runnable {
 
 
     public void paint(Graphics g) {
-        g.setColor(new Color(150, 75, 0));
 
-
-        for (int i = 0; i < Board.WIDTH; i++) {
-            for (int j = 0; j < Board.HEIGHT; j++) {
-                if (Board.get(j, i) == 1) {
-                    g.setColor(Color.gray);
-                    g.fillRect(8 + j * Game.ONE_UNIT_SIZE, 30 + i * Game.ONE_UNIT_SIZE,  Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE);
-                }
-                else if (Board.get(j, i) == 0) {
-                    g.setColor(new Color(150, 75, 0));
-                    g.fillRect(8 + j * Game.ONE_UNIT_SIZE, 30 + i * Game.ONE_UNIT_SIZE,  Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE);
-                }
-                else if (Board.get(j, i) == 2) {
-                    g.setColor(Color.green);
-                    g.fillRect(8 + j * Game.ONE_UNIT_SIZE, 30 + i * Game.ONE_UNIT_SIZE,  Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE);
-                }
-                else if (Board.get(j, i) == 3) {
-                    g.setColor(Color.red);
-                    g.fillRect(8 + j * Game.ONE_UNIT_SIZE, 30 + i * Game.ONE_UNIT_SIZE,  Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE);
+        if (!initialised) {
+            for (int i = 0; i < Board.WIDTH; i++) {
+                for (int j = 0; j < Board.HEIGHT; j++) {
+                    if (Board.get(j, i) == 1) {
+                        g.setColor(Color.gray);
+                        g.fillRect(8 + j * Game.ONE_UNIT_SIZE, 30 + i * Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE);
+                    }
+                    else if (Board.get(j, i) == 2) {
+                        g.setColor(Color.green);
+                        g.fillRect(8 + j * Game.ONE_UNIT_SIZE, 30 + i * Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE);
+                    }
+                    else if (Board.get(j, i) == 0) {
+                        g.setColor(new Color(150, 75, 0));
+                        g.fillRect(8 + j * Game.ONE_UNIT_SIZE, 30 + i * Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE);
+                    }
                 }
             }
+            initialised = true;
         }
+
+        if (!gameEnded) {
+
+            g.setColor(new Color(150, 75, 0));
+            g.fillRect(8 + snake.getLastPartLastSeen().getX() * Game.ONE_UNIT_SIZE,
+                    30 + snake.getLastPartLastSeen().getY() * Game.ONE_UNIT_SIZE,
+                    Game.ONE_UNIT_SIZE,
+                    Game.ONE_UNIT_SIZE);
+            g.setColor(Color.green);
+
+            g.fillRect(8 + snake.get(0).getX() * Game.ONE_UNIT_SIZE,
+                    30 + snake.get(0).getY() * Game.ONE_UNIT_SIZE,
+                    Game.ONE_UNIT_SIZE,
+                    Game.ONE_UNIT_SIZE);
+
+            g.fillRect(8 + snake.get(snake.getLength() - 1).getX() * Game.ONE_UNIT_SIZE,
+                    30 + snake.get(snake.getLength() - 1).getY() * Game.ONE_UNIT_SIZE,
+                    Game.ONE_UNIT_SIZE,
+                    Game.ONE_UNIT_SIZE);
+        }
+
+
+        if (Board.foodExists)
+        {
+            g.setColor(Color.red);
+            g.fillRect(8 + food.getX() * Game.ONE_UNIT_SIZE, 30 + food.getY() * Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE);
+        }
+
     }
 
 

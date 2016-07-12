@@ -25,7 +25,7 @@ public class Board {
 
         boardBody = new int[HEIGHT][WIDTH];
 
-        FileInputStream fin = new FileInputStream(new File("src/main/resources/level1.map"));
+        FileInputStream fin = new FileInputStream(new File("src/main/resources/level2.map"));
 
         byte[] code = new byte[fin.available()];
 
