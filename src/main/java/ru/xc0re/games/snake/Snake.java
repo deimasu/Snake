@@ -56,14 +56,30 @@ public class Snake {
             snakeBody.get(i).setY(snakeBody.get(i - 1).getY());
         }
 
-        if (direction == 0)
-            snakeBody.get(0).setY(snakeBody.get(0).getY() - 1);
-        else if (direction == 1)
-            snakeBody.get(0).setX(snakeBody.get(0).getX() + 1);
-        else if (direction == 2)
-            snakeBody.get(0).setY(snakeBody.get(0).getY() + 1);
-        else if (direction == 3)
-            snakeBody.get(0).setX(snakeBody.get(0).getX() - 1);
+        if (direction == 0) {
+            if (snakeBody.get(0).getY() != 0)
+                snakeBody.get(0).setY(snakeBody.get(0).getY() - 1);
+            else
+                snakeBody.get(0).setY(Board.HEIGHT - 1);
+        }
+        else if (direction == 1) {
+            if (snakeBody.get(0).getX() != Board.WIDTH - 1)
+                snakeBody.get(0).setX(snakeBody.get(0).getX() + 1);
+            else
+                snakeBody.get(0).setX(0);
+        }
+        else if (direction == 2) {
+            if (snakeBody.get(0).getY() != Board.HEIGHT - 1)
+                snakeBody.get(0).setY(snakeBody.get(0).getY() + 1);
+            else
+                snakeBody.get(0).setY(0);
+        }
+        else if (direction == 3) {
+            if (snakeBody.get(0).getX() != 0)
+                snakeBody.get(0).setX(snakeBody.get(0).getX() - 1);
+            else
+                snakeBody.get(0).setX(Board.WIDTH - 1);
+        }
 
         if (Board.getInstance().isFieldEmpty(snakeBody.get(0).getX(), snakeBody.get(0).getY())) {
             Board.getInstance().set(lastPartLastSeen.getX(), lastPartLastSeen.getY(), this);

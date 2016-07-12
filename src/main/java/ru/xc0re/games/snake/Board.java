@@ -3,6 +3,7 @@ package ru.xc0re.games.snake;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class Board {
 
@@ -21,35 +22,38 @@ public class Board {
     private static Board instance;
     public static boolean foodExists;
 
-    private Board() throws IOException {
+    private Board()  {
 
-        boardBody = new int[HEIGHT][WIDTH];
+        try {
+            boardBody = new int[HEIGHT][WIDTH];
 
-        FileInputStream fin = new FileInputStream(new File("src/main/resources/level2.map"));
+            InputStream fin = Board.class.getClassLoader().getResourceAsStream("level3.map");
 
-        byte[] code = new byte[fin.available()];
+            byte[] code = new byte[fin.available()];
 
-        fin.read(code);
-        fin.close();
+            fin.read(code);
+            fin.close();
 
-        int counter = 0;
+            int counter = 0;
 
-        for (int i = 0; i < HEIGHT; i++) {
-            for (int j = 0; j < WIDTH; j++) {
-                if (code[counter] == 49)
-                    boardBody[i][j] = 1;
-                else boardBody[i][j] = 0;
-                counter++;
+            for (int i = 0; i < HEIGHT; i++) {
+                for (int j = 0; j < WIDTH; j++) {
+                    if (code[counter] == 49)
+                        boardBody[i][j] = 1;
+                    else boardBody[i][j] = 0;
+                    counter++;
+                }
             }
         }
+        catch (IOException e) {}
+
     }
 
     public static Board getInstance() {
         if (instance == null) {
-            try {
-                instance = new Board();
-            } catch (IOException e) {
-            }
+
+            instance = new Board();
+
         }
         return instance;
     }
