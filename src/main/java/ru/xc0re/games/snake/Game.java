@@ -21,8 +21,8 @@ public class Game extends JFrame implements Runnable {
     private boolean initialised;
 
     public static final int ONE_UNIT_SIZE = 15;
-    public static final int HEIGHT = Board.HEIGHT * ONE_UNIT_SIZE + 39;
-    public static final int WIDTH = Board.WIDTH * ONE_UNIT_SIZE + 16;
+    public static final int HEIGHT = Board.HEIGHT * ONE_UNIT_SIZE + 27;
+    public static final int WIDTH = Board.WIDTH * ONE_UNIT_SIZE + 5;
 
     public Game() {
 
@@ -113,21 +113,26 @@ public class Game extends JFrame implements Runnable {
     public void paint(Graphics g) {
 
         if (!initialised) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             for (int i = 0; i < Board.WIDTH; i++) {
                 for (int j = 0; j < Board.HEIGHT; j++) {
                     if (Board.get(j, i) == GameUnit.WALL) {
                         g.setColor(Color.gray);
-                        g.fillRect(8 + j * Game.ONE_UNIT_SIZE, 30 + i * Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE);
+                        g.fillRect(2 + j * Game.ONE_UNIT_SIZE, 24 + i * Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE);
                         g.setColor(Color.black);
-                        g.drawRect(8 + j * Game.ONE_UNIT_SIZE, 30 + i * Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE);
+                        g.drawRect(2 + j * Game.ONE_UNIT_SIZE, 24 + i * Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE);
                     }
                     else if (Board.get(j, i) == GameUnit.SNAKE) {
                         g.setColor(Color.green);
-                        g.fillRect(8 + j * Game.ONE_UNIT_SIZE, 30 + i * Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE);
+                        g.fillRect(2 + j * Game.ONE_UNIT_SIZE, 24 + i * Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE);
                     }
                     else if (Board.get(j, i) == GameUnit.EMPTY_SPACE) {
                         g.setColor(new Color(150, 75, 0));
-                        g.fillRect(8 + j * Game.ONE_UNIT_SIZE, 30 + i * Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE);
+                        g.fillRect(2 + j * Game.ONE_UNIT_SIZE, 24 + i * Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE);
                     }
                 }
             }
@@ -137,51 +142,51 @@ public class Game extends JFrame implements Runnable {
         if (!gameEnded) {
 
             g.setColor(new Color(150, 75, 0));
-            g.fillRect(8 + snake.getLastPartLastSeen().getX() * Game.ONE_UNIT_SIZE,
-                    30 + snake.getLastPartLastSeen().getY() * Game.ONE_UNIT_SIZE,
+            g.fillRect(2 + snake.getLastPartLastSeen().getX() * Game.ONE_UNIT_SIZE,
+                    24 + snake.getLastPartLastSeen().getY() * Game.ONE_UNIT_SIZE,
                     Game.ONE_UNIT_SIZE,
                     Game.ONE_UNIT_SIZE);
             g.setColor(Color.green);
 
-            g.fillRect(8 + snake.get(1).getX() * Game.ONE_UNIT_SIZE,
-                    30 + snake.get(1).getY() * Game.ONE_UNIT_SIZE,
+            g.fillRect(2 + snake.get(1).getX() * Game.ONE_UNIT_SIZE,
+                    24 + snake.get(1).getY() * Game.ONE_UNIT_SIZE,
                     Game.ONE_UNIT_SIZE,
                     Game.ONE_UNIT_SIZE);
 
-            g.fillRect(8 + snake.get(0).getX() * Game.ONE_UNIT_SIZE,
-                    30 + snake.get(0).getY() * Game.ONE_UNIT_SIZE,
+            g.fillRect(2 + snake.get(0).getX() * Game.ONE_UNIT_SIZE,
+                    24 + snake.get(0).getY() * Game.ONE_UNIT_SIZE,
                     Game.ONE_UNIT_SIZE,
                     Game.ONE_UNIT_SIZE);
 
-            g.fillRect(8 + snake.get(snake.getLength() - 1).getX() * Game.ONE_UNIT_SIZE,
-                    30 + snake.get(snake.getLength() - 1).getY() * Game.ONE_UNIT_SIZE,
+            g.fillRect(2 + snake.get(snake.getLength() - 1).getX() * Game.ONE_UNIT_SIZE,
+                    24 + snake.get(snake.getLength() - 1).getY() * Game.ONE_UNIT_SIZE,
                     Game.ONE_UNIT_SIZE,
                     Game.ONE_UNIT_SIZE);
 
             g.setColor(Color.black);
             if (snake.getDirection() == Direction.UP) {
-                g.drawRect(8 + snake.get(0).getX() * Game.ONE_UNIT_SIZE + 2,
-                        30 + snake.get(0).getY() * Game.ONE_UNIT_SIZE + 3, 2, 2);
-                g.drawRect(8 + snake.get(0).getX() * Game.ONE_UNIT_SIZE + 10,
-                        30 + snake.get(0).getY() * Game.ONE_UNIT_SIZE + 3, 2, 2);
+                g.drawRect(2 + snake.get(0).getX() * Game.ONE_UNIT_SIZE + 2,
+                        24 + snake.get(0).getY() * Game.ONE_UNIT_SIZE + 3, 2, 2);
+                g.drawRect(2 + snake.get(0).getX() * Game.ONE_UNIT_SIZE + 10,
+                        24 + snake.get(0).getY() * Game.ONE_UNIT_SIZE + 3, 2, 2);
             }
             else if (snake.getDirection() == Direction.RIGHT) {
-                g.drawRect(8 + snake.get(0).getX() * Game.ONE_UNIT_SIZE + 10,
-                        30 + snake.get(0).getY() * Game.ONE_UNIT_SIZE + 2, 2, 2);
-                g.drawRect(8 + snake.get(0).getX() * Game.ONE_UNIT_SIZE + 10,
-                        30 + snake.get(0).getY() * Game.ONE_UNIT_SIZE + 10, 2, 2);
+                g.drawRect(2 + snake.get(0).getX() * Game.ONE_UNIT_SIZE + 10,
+                        24 + snake.get(0).getY() * Game.ONE_UNIT_SIZE + 2, 2, 2);
+                g.drawRect(2 + snake.get(0).getX() * Game.ONE_UNIT_SIZE + 10,
+                        24 + snake.get(0).getY() * Game.ONE_UNIT_SIZE + 10, 2, 2);
             }
             else if (snake.getDirection() == Direction.DOWN) {
-                g.drawRect(8 + snake.get(0).getX() * Game.ONE_UNIT_SIZE + 2,
-                        30 + snake.get(0).getY() * Game.ONE_UNIT_SIZE + 10, 2, 2);
-                g.drawRect(8 + snake.get(0).getX() * Game.ONE_UNIT_SIZE + 10,
-                        30 + snake.get(0).getY() * Game.ONE_UNIT_SIZE + 10, 2, 2);
+                g.drawRect(2 + snake.get(0).getX() * Game.ONE_UNIT_SIZE + 2,
+                        24 + snake.get(0).getY() * Game.ONE_UNIT_SIZE + 10, 2, 2);
+                g.drawRect(2 + snake.get(0).getX() * Game.ONE_UNIT_SIZE + 10,
+                        24 + snake.get(0).getY() * Game.ONE_UNIT_SIZE + 10, 2, 2);
             }
             else if (snake.getDirection() == Direction.LEFT) {
-                g.drawRect(8 + snake.get(0).getX() * Game.ONE_UNIT_SIZE + 2,
-                        30 + snake.get(0).getY() * Game.ONE_UNIT_SIZE + 10, 2, 2);
-                g.drawRect(8 + snake.get(0).getX() * Game.ONE_UNIT_SIZE + 2,
-                        30 + snake.get(0).getY() * Game.ONE_UNIT_SIZE + 2, 2, 2);
+                g.drawRect(2 + snake.get(0).getX() * Game.ONE_UNIT_SIZE + 2,
+                        24 + snake.get(0).getY() * Game.ONE_UNIT_SIZE + 10, 2, 2);
+                g.drawRect(2 + snake.get(0).getX() * Game.ONE_UNIT_SIZE + 2,
+                        24 + snake.get(0).getY() * Game.ONE_UNIT_SIZE + 2, 2, 2);
             }
 
         }
@@ -190,7 +195,7 @@ public class Game extends JFrame implements Runnable {
         if (Board.foodExists)
         {
             g.setColor(Color.red);
-            g.fillRect(8 + food.getX() * Game.ONE_UNIT_SIZE, 30 + food.getY() * Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE);
+            g.fillRect(2 + food.getX() * Game.ONE_UNIT_SIZE, 24 + food.getY() * Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE, Game.ONE_UNIT_SIZE);
         }
 
     }

@@ -1,7 +1,9 @@
-ru\xc0re\games\snake\Game$1.class
-ru\xc0re\games\snake\Snake.class
 ru\xc0re\games\snake\Game.class
-ru\xc0re\games\snake\SnakePart.class
+ru\xc0re\games\snake\enums\GameUnit.class
+ru\xc0re\games\snake\model\Food.class
 ru\xc0re\games\snake\Main.class
-ru\xc0re\games\snake\Board.class
-ru\xc0re\games\snake\Food.class
+ru\xc0re\games\snake\model\Board.class
+ru\xc0re\games\snake\model\Snake.class
+ru\xc0re\games\snake\model\SnakePart.class
+ru\xc0re\games\snake\Game$1.class
+ru\xc0re\games\snake\enums\Direction.class
