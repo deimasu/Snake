@@ -7,13 +7,6 @@ import java.io.InputStream;
 
 public class Board {
 
-    /*
-    * 0 - empty field
-    * 1 - wall
-    * 2 - snake's body part
-    * 3 - a piece of food
-     */
-
     public static final int WIDTH = 25;
     public static final int HEIGHT = 25;
 
@@ -58,6 +51,10 @@ public class Board {
         return instance;
     }
 
+    public static void Destruct() {
+        instance = null;
+    }
+
     public boolean isFieldEmpty(int x, int y) {
         return boardBody[y][x] == GameUnit.EMPTY_SPACE;
     }
@@ -72,15 +69,6 @@ public class Board {
             boardBody[y][x] = GameUnit.SNAKE;
         }
 
-    }
-
-    public static void printBoard() {
-        for (int i = 0; i < WIDTH; i++) {
-            for (int j = 0; j < HEIGHT; j++) {
-                System.out.print(boardBody[i][j] + " ");
-            }
-            System.out.println();
-        }
     }
 
     public static GameUnit get(int x, int y) {

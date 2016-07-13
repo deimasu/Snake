@@ -14,7 +14,6 @@ import java.awt.event.KeyListener;
 public class Game extends JFrame implements Runnable {
 
     private Snake snake;
-    private Board board;
     private Food food;
 
     private boolean gameEnded;
@@ -29,8 +28,6 @@ public class Game extends JFrame implements Runnable {
         super("Snake Game");
 
         snake = new Snake();
-        board = Board.getInstance();
-
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
@@ -45,13 +42,11 @@ public class Game extends JFrame implements Runnable {
         addKeyListener(new KeyListener() {
 
             public void keyTyped(KeyEvent e) {
-//                myKeyEvt(e);
+                myKeyEvt(e);
             }
 
 
-            public void keyReleased(KeyEvent e) {
-//                myKeyEvt(e);
-            }
+            public void keyReleased(KeyEvent e) {}
 
 
             public void keyPressed(KeyEvent e) {
@@ -113,11 +108,11 @@ public class Game extends JFrame implements Runnable {
     public void paint(Graphics g) {
 
         if (!initialised) {
+
             try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+                Thread.sleep(100);
+            } catch (InterruptedException e) {}
+
             for (int i = 0; i < Board.WIDTH; i++) {
                 for (int j = 0; j < Board.HEIGHT; j++) {
                     if (Board.get(j, i) == GameUnit.WALL) {
